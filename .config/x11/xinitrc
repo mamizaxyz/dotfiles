@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# xinitrc runs automatically when you run `startx`.
+
+# There are some important commands that have to be running when we start
+# the graphical environment. I source them here. If using a display manager; `~/.xprofile` will
+# be sourced. So I link that to `~/.config/x11/xprofile` to prevent doubling up commands.
+
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ] || . "$HOME/.xprofile"
+
+exec dwm

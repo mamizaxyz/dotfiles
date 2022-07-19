@@ -1,0 +1,8 @@
+#!/bin/sh
+
+vpn="$1"
+nmcli connection export "$1" >/dev/null 2>&1 || { notify-send "🔵 VPN failed" "'$1' not found." && exit 1; }
+# Removed wildcard from the condition because of unreliability
+# ---------------------*---------- #
+[ -f /sys/class/net/tun0/operstate ] && nmcli connection down "$vpn" >/dev/null 2>&1 && notify-send "🔴 VPN turned off" && exit 0
+notify-send "Turning VPN on" && nmcli connection up "$vpn" >/dev/null 2>&1 && notify-send "🟢 VPN turned on"

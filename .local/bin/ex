@@ -1,0 +1,39 @@
+#!/bin/sh
+
+help()
+{
+    printf "Usage: ex <file>\n"
+}
+
+extract()
+{
+    [ -z "$1" ] && help && exit 1
+    for f in "$@"; do
+        if [ -f "$f" ]; then
+            case "${f%,}" in
+                *.7z|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar) 7zz x "$f";;
+                *.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar) tar xfv "$f";;
+                *.rar|*.cbr) unrar-free x -ad "$f";;
+                *.zip|*.epub|*.cbz) unzip "$f";;
+                *.Z) uncompress "$f";;
+                *.bz2) bunzip2 "$f";;
+                *.gz) gunzip "$1";;
+                *.xz) unxz "$f";;
+                *) printf "ERROR: Unrecognized file format\n" && exit 1
+            esac
+        else
+            printf "ERROR: '%s' does not exist" "$f"
+        fi
+    done
+}
+
+while getopts "hu" o; do
+    case "${o}" in
+        h) help && exit 1;;
+        u) help && exit 1;;
+        *) printf "See \`ex -h\` for help\n" && exit 1;;
+
+    esac
+done
+
+extract "$@"

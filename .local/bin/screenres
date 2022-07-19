@@ -1,0 +1,7 @@
+#!/bin/sh
+
+sm="$(xrandr --listmonitors | awk 'NR==3{print $4}')"
+
+[ -z "$sm" ] || xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x900 --rotate normal --output HDMI1 --mode 1440x900 --pos 240x0 --rotate normal --output VIRTUAL1 --off && exit 0
+
+xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --ouput HDMI1 --off --output VIRTUAL1 --off && exit 1

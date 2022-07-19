@@ -1,0 +1,7 @@
+[global_config]
+  tab_position = hidden
+
+[profiles]
+  [[default]]
+    font = "Mononoki 18"
+    show_titlebar = false

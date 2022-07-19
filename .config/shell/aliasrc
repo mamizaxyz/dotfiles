@@ -1,0 +1,84 @@
+#!/bin/sh
+
+# Use neovim for vi/vim if present:
+[ -x "$(command -v nvim)" ] && alias vi="nvim" vim="nvim" vimdiff="nvim -d"
+
+# Alias magit if emacs is installed
+[ -x "$(command -v emacs)" ] && alias magit="emacs --no-window-system --execute=\"(magit-status)\""
+
+# Use exa for ls if present (if not just colorize ls):
+if [ -x "$(command -v exa)" ]; then
+	alias ls="exa --group-directories-first --git"
+else
+	alias ls="ls -hNr --color=auto --group-directories-first"
+fi
+
+# Use $XINITRC variable if file exists:
+[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+# sudo not required for some system commands:
+for command in mount umount pacman su fdisk dd; do
+	alias $command="sudo $command"
+done; unset command
+
+# Unnecessary bling:
+alias clear='echo -en "\x1b[2J\x1b[1;1H"; echo; echo; seq 1 $(tput cols) | sort -R | spark | lolcat; echo; echo'
+
+# Verbosity and settings that you pretty much just always are going to want:
+alias \
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -vI" \
+	sxiv="sxiv -b" \
+	mkd="mkdir -pv" \
+	history="history 0" \
+	up="uptime -p" \
+	cw="wc -w" \
+	lc="wc -l" \
+	du="du -hs" \
+	df="df -h"
+
+# Colorize commmands when possible:
+alias \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	ccat="highlight --out-format=ansi" \
+	ip="ip -color=auto"
+
+# These common commands are just too long! Abbreviate them:
+alias \
+	ka="killall" \
+	c="clear" \
+	sdn="shutdown -h now" \
+	p="pacman" \
+	pp="paru" \
+	v="vim" \
+	sv="sudo vim" \
+	e="emacs" \
+	s="sxiv" \
+	z="zathura" \
+	lf="lfub" \
+	sys="systemctl" \
+	ssys="sudo systemctl" \
+	dmesg="sudo dmesg -H" \
+	unrar="unrar-free" \
+	ug="sudo grub-mkconfig -o /boot/grub/grub.cfg" \
+	m="sudo make clean install" \
+	pong="ping 4.2.2.4"
+
+# Git commands:
+alias \
+	g="git" \
+	gd="git diff" \
+	gs="git status" \
+	ga="git add -A" \
+	gc="git commit" \
+	gp="git push" \
+	ggc="git gc"
+
+# Tmux commands:
+alias \
+	t="tmux" \
+	tn="tmux new -s" \
+	tl="tmux ls" \
+	ta="tmux attach -t"

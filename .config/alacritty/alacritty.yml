@@ -1,0 +1,209 @@
+window:
+  opacity: 0.99
+  padding:
+    y: 4
+    x: 5
+
+scrolling:
+  history: 100000
+
+schemes:
+  dracula: &dracula
+    primary:
+      background: '#282a36'
+      foreground: '#f8f8f2'
+      bright_foreground: '#ffffff'
+    cursor:
+      text: CellBackground
+      cursor: CellForeground
+    vi_mode_cursor:
+      text: CellBackground
+      cursor: CellForeground
+    search:
+      matches:
+        foreground: '#44475a'
+        background: '#50fa7b'
+      focused_match:
+        foreground: '#44475a'
+        background: '#ffb86c'
+      bar:
+        background: '#282a36'
+        foreground: '#f8f8f2'
+    hints:
+      start:
+        foreground: '#282a36'
+        background: '#f1fa8c'
+      end:
+        foreground: '#f1fa8c'
+        background: '#282a36'
+    line_indicator:
+      foreground: None
+      background: None
+    selection:
+      text: CellForeground
+      background: '#44475a'
+    normal:
+      black: '#21222c'
+      red: '#ff5555'
+      green: '#50fa7b'
+      yellow: '#f1fa8c'
+      blue: '#bd93f9'
+      magenta: '#ff79c6'
+      cyan: '#8be9fd'
+      white: '#f8f8f2'
+    bright:
+      black: '#6272a4'
+      red: '#ff6e6e'
+      green: '#69ff94'
+      yellow: '#ffffa5'
+      blue: '#d6acff'
+      magenta: '#ff92df'
+      cyan: '#a4ffff'
+      white: '#ffffff'
+  vscode: &vscode
+    primary:
+      background: '#1e1e1e'
+      foreground: '#cccccc'
+    selection:
+      text: CellForeground
+      background: '#565656'
+
+    normal:
+      black: '#000000'
+      red: '#cd3131'
+      green: '#0dbc79'
+      yellow: '#e5e510'
+      blue: '#2472c8'
+      magenta: '#bc3fbc'
+      cyan: '#11a8cd'
+      white: '#e5e5e5'
+
+    bright:
+      black: '#666666'
+      red: '#f14c4c'
+      green: '#23d18b'
+      yellow: '#f5f543'
+      blue: '#3b8eea'
+      magenta: '#d670d6'
+      cyan: '#29b8db'
+      white: '#e5e5e5'
+
+  hybrid: &hybrid
+    primary:
+      background: '#27292c'
+      foreground: '#d0d2d1'
+
+    normal:
+      black: '#35383b'
+      red: '#b05655'
+      green: '#769972'
+      yellow: '#e1a574'
+      blue: '#7693ac'
+      magenta: '#977ba0'
+      cyan: '#749e99'
+      white: '#848b92'
+
+    bright:
+      black: '#484c52'
+      red: '#d27c7b'
+      green: '#dffebe'
+      yellow: '#f0d189'
+      blue: '#96b1c9'
+      magenta: '#bfa5cf'
+      cyan: '#9fc9c3'
+      white: '#fcf7e2'
+
+  hyper: &hyper
+    primary:
+      background: '#000000'
+      foreground: '#ffffff'
+
+    normal:
+      black: '#000000'
+      red: '#fe0100'
+      green: '#33ff00'
+      yellow: '#feff00'
+      blue: '#0066ff'
+      magenta: '#cc00ff'
+      cyan: '#00ffff'
+      white: '#d0d0d0'
+
+    bright:
+      black: '#000000'
+      red: '#fe0100'
+      green: '#33ff00'
+      yellow: '#feff00'
+      blue: '#0066ff'
+      magenta: '#cc00ff'
+      cyan: '#00ffff'
+      white: '#FFFFFF'
+
+  pencil: &pencil
+    primary:
+      background: '#212121'
+      foreground: '#f1f1f1'
+
+    normal:
+      black: '#212121'
+      red: '#c30771'
+      green: '#10a778'
+      yellow: '#a89c14'
+      blue: '#008ec4'
+      magenta: '#523c79'
+      cyan: '#20a5ba'
+      white: '#e0e0e0'
+
+    bright:
+      black: '#212121'
+      red: '#fb007a'
+      green: '#5fd7af'
+      yellow: '#f3e430'
+      blue: '#20bbfc'
+      magenta: '#6855de'
+      cyan: '#4fb8cc'
+      white: '#f1f1f1'
+
+  solarized: &solarized
+    primary:
+      background: '#002b36'
+      foreground: '#839496'
+
+    normal:
+      black: '#073642'
+      red: '#dc322f'
+      green: '#859900'
+      yellow: '#b58900'
+      blue: '#268bd2'
+      magenta: '#d33682'
+      cyan: '#2aa198'
+      white: '#eee8d5'
+
+    bright:
+      black: '#586e75'
+      red: '#cb4b16'
+      green: '#586e75'
+      yellow: '#657b83'
+      blue: '#839496'
+      magenta: '#6c71c4'
+      cyan: '#93a1a1'
+      white: '#fdf6e3'
+
+colors: *vscode
+
+font:
+  normal:
+    family: Iosevka
+    style: Regular
+  bold:
+    family: Iosevka
+    style: Bold
+  italic:
+    family: Iosevka
+    style: Italic
+  bold_italic:
+    family: Iosevka
+    style: Bold Italic
+  size: 16.0
+  offset:
+    x: 1
+    y: 1

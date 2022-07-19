@@ -1,0 +1,4 @@
+#!/bin/sh
+
+[ "$(setxkbmap -query | awk 'NR==3 {print $2}')" = "us" ] && echo "US" && exit 0
+echo "FA" && exit 0
