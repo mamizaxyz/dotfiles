@@ -3,6 +3,7 @@
 setsid -f xrdb "$HOME/.config/x11/xresources"
 
 xset r rate 300 50
+setxkbmap -layout "us,ir" -option "grp:alt_shift_toggle"
 
 pidof -s picom || setsid -f picom --experimental-backends &
 
