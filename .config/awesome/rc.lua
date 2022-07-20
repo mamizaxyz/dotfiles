@@ -148,6 +148,7 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 local Battery = require("battery")
+local Volume = require("volume")
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -193,14 +194,10 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             awful.widget.keyboardlayout(),
             wibox.widget.textbox(" | "),
-            -- Brightness({
-            --         type = "icon_and_text",
-            --         program = "xbacklight",
-            --         step = 10,
-            --         base = 100,
-            --         -- timeout = 10,
-            -- }),
-            -- wibox.widget.textbox(" | "),
+            Volume({
+                    font = "Iosevka",
+            }),
+            wibox.widget.textbox(" | "),
             Battery({
                     timeout = 1,
                     show_current_level = true,
