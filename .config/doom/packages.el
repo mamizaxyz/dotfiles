@@ -52,3 +52,4 @@
 (package! gruber-darker-theme)
 (package! csv-mode)
 (package! dired-open)
+(package! vimrc-mode)
