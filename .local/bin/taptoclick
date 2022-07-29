@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Enable tapping instead of pressing on touchpad:
+synclient TapButton1=1
+synclient TapButton2=3
+synclient TapButton3=2
+
+# Enable Natural scrolling:
+synclient VertScrollDelta=-111
+synclient HorizScrollDelta=-111

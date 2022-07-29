@@ -1,0 +1,82 @@
+#!/bin/sh
+
+twoscreen()
+{
+    mirror=$(printf "No\\nYes" | dmenu -i -p "Mirror displays?")
+
+    if [ "$mirror" = "yes" ]; then
+        external=$(echo "$screens" | dmenu -i -p "Optimize resoulution for:")
+        internal=$(echo "$screens" | grep -v "$external")
+
+        res_external=$(xrandr --query | sed -n "/^$external/,/\+/p" | \
+            tail -n 1 | awk '{print $1}')
+        res_internal=$(xrandr --query | sed -n "/^$internal/,/\+/p" | \
+            tail -n 1 | awk '{print $1}')
+
+        res_ext_x=$(echo "$res_external" | sed 's/x.*//')
+        res_ext_y=$(echo "$res_external" | sed 's/.*x//')
+        res_int_x=$(echo "$res_internal" | sed 's/x.*//')
+        res_int_y=$(echo "$res_internal" | sed 's/.*x//')
+
+        scale_x=$(echo "$res_ext_x / $res_int_x" | bc -l)
+        scale_y=$(echo "$res_ext_y / $res_int_y" | bc -l)
+
+        xrandr --output "$external" --auto --scale 1.0x1.0 \
+            --output "$internal" --auto --same-as "$external" \
+            --scale "$scale_x"x"$scale_y"
+
+    else
+        primary=$(echo "$screens" | dmenu -i -p "Select primary display:")
+        secondary=$(echo "$screens" | grep -v "$primary")
+        direction=$(printf "Left\\nRight" | dmenu -i -p "What side of $primary should $secondary be on?")
+        tertiary=$(echo "$screens" | grep -v "$primary" | grep -v "$secondary" | dmenu -i -p "Select third display:")
+        xrandr --output "$primary" --auto --scale 1.0x1.0 \
+            --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0
+    fi
+}
+
+morescreen()
+{
+    primary=$(echo "$screens" | dmenu -i -p "Select primary display:")
+    secondary=$(echo "$screens" | grep -v "$primary" | dmenu -i -p "Select secondary display:")
+    direction=$(printf "Left\\nRight" | dmenu -i -p "What side of $primary should secondary be on?")
+    tertiary=$(echo "$screens" | grep -v "$primary" | grep -v "$secondary" | dmenu -i -p "Select third display:")
+    xrandr --output "$primary" --auto \
+        --output "$secondary" --"$direction"-of "$primary" --auto \
+        --output "$tertiary" --"$(printf "Left\\nRight" | grep -v "$direction")"-of "$primary" --auto
+}
+
+multimon()
+{
+    case "$(echo "$screens" | wc -l)" in
+        2) twoscreen ;;
+        *) morescreen ;;
+    esac
+}
+
+onescreen()
+{
+    xrandr --output "$1" --auto --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)
+}
+
+postrun()
+{
+    setbg
+    { killall dunst; setsid -f dunst; } >/dev/null 2>&1
+}
+
+allposs=$(xrandr -q | grep "connected")
+
+screens=$(echo "$allposs" | awk '/ connected/ {print $1}')
+
+[ "$(echo "$screens" | wc -l)" -lt 2 ] &&
+    { onescreen "$screens"; postrun; notify-send "💻 Only one screen detected."; exit; }
+
+chosen=$(printf "%s\\nMulti-Monitor\\nManual selection" "$screens" | dmenu -i -p "Select display arangement:") &&
+    case "$chosen" in
+        "Manual selection") arandr; exit ;;
+        "Multi-Monitor") multimon ;;
+        *) onescreen "$chosen" ;;
+    esac
+
+postrun

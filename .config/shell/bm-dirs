@@ -1,0 +1,9 @@
+cac	${XDG_CACHE_HOME:-$HOME/.cache}
+rp	$HOME/rp
+cf	${XDG_CONFIG_HOME:-$HOME/.config}
+fl	$HOME/fl
+bd	$HOME/bdl
+rr	$HOME/.local/src
+src	$HOME/.local/src
+mn	/mnt
+bin	$HOME/.local/bin

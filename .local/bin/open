@@ -1,0 +1,29 @@
+#!/bin/sh
+
+usage()
+{
+	printf "Usage: open <file(s)>\n"
+}
+
+[ -z "$1" ] && usage && exit 1
+
+while getopts ":uh" o; do
+    case "${o}" in
+        h|u) usage && exit 0;;
+	*) usage && exit 1;;
+    esac
+done
+
+for f in "$@"; do
+	[ -f "$f" ] || { printf "ERROR: '%s' does not exist\n" "$f" && continue; }
+	case $(file --mime-type --dereference -b "$f") in
+		application/pdf) setsid -f zathura "$f" >/dev/null 2>&1;;
+		text/*|application/json|inode/x-empty) setsid "$TERMINAL" -e "$EDITOR" "$f";;
+		image/x-xcf) setsid -f gimp "$f" >/dev/null 2>&1;;
+		image/svg+xml) setsid -f "$TERMINAL" -e display -- "$f";;
+		image/*) setsid -f sxiv -b "$f";;
+		audio/*) setsid -f mpv "$f" --force-window -quiet >/dev/null 2>&1;;
+		video/*) setsid -f mpv "$f" -quiet >/dev/null 2>&1;;
+		*) printf "ERROR: '%s' is not defined\n" "$(file --mime-type -b "$f")" && exit 1;;
+	esac
+done

@@ -1,0 +1,16 @@
+" "
+"--- Tech --- "
+https://archlinux.org/feeds/news
+"--- YouTube ---"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA
+https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg
+https://www.youtube.com/feeds/videos.xml?channel_id=UCrqM0Ym_NbK1fqeQG2VIohg
+# "--- Twitter ---"
+# https://nitter.net/jadi/rss
+" "
+"--- Blog ---"
+https://lukesmith.xyz/rss.xml
+" "
+"--- Projects ---"
+https://github.com/doomemacs/doomemacs/commits/master.atom
+https://gitlab.freedesktop.org/xorg/lib/libxft/-/commits/master?format=atom

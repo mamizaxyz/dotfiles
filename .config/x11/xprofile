@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# This file runs when you log into a graphical session.
+# If you use startx/xinit like a chad, this file will also be sourced.
+
+setsid -f xrdb "$HOME/.config/x11/xresources"
+
+setsid -f setxkbmap -layout "us,ir" -option grp:alt_shift_toggle
+
+xset r rate 300 50
+
+autostart="xcompmgr screenres nm-applet blueman-applet numlockx taptoclick lxsession unclutter dunst mpd setbg "
+for p in $autostart; do
+    pidof -s "$p" || setsid -f "$p"
+done

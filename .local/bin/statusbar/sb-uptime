@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+    1) notify-send "$(uptime -p)";;
+    3) notify-send "⏰ Uptime module" "\-Shows uptime ⏰
+- Left click to send a notification with uptime.";;
+    6) "$TERMINAL" -e "$EDITOR" "$0"
+esac
+
+uptime -p

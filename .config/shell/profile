@@ -1,0 +1,117 @@
+#!/bin/zsh
+
+# profile file. Environmental variables are set here.
+
+# Adds `~/.local/bin` and it's sub-directories to $PATH
+export PATH="$PATH$(find ~/.local/bin -type d -printf ":%p")"
+
+# Default programs:
+export EDITOR="nvim"
+export TERMINAL="alacritty"
+export BROWSER="brave"
+export WM="dwm"
+
+# bat as manpager:
+export MANPAGER="/bin/sh -c 'col -bx | bat -l man -p'"
+# Run the following command if you want to reset the manpager:
+# `unset MANPAGER`
+
+# `~/` Clean-up:
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export ERRFILE="${XDG_CACHE_HOME:-$HOME/.cache}/x11/xsession-errors"
+export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
+export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
+export LESSHISTFILE="-"
+export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
+export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
+export TERMINFO="${XDG_DATA_HOME:-$HOME/.local/share}/terminfo"
+export TERMINFO_DIRS="${XDG_DATA_HOME:-$HOME/.local/share}/terminfo:/usr/share/terminfo"
+
+# Some settings:
+export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+export QT_QPA_PLATFORMTHEME="qt5ct"
+export LESS=-R
+export LESS_TERMCAP_mb="$(printf '%b' '\e[1;31m')"
+export LESS_TERMCAP_md="$(printf '%b' '\e[1;36m')"
+export LESS_TERMCAP_me="$(printf '%b' '\e[0m')"
+export LESS_TERMCAP_so="$(printf '%b' '\e[01;44;33m')"
+export LESS_TERMCAP_se="$(printf '%b' '\e[0m')"
+export LESS_TERMCAP_us="$(printf '%b' '\e[1;32m')"
+export LESS_TERMCAP_ue="$(printf '%b' '\e[0m')"
+export LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
+# export AWT_TOOLKIT="MToolkit wmname LG3D" # May have to install `wmname`
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+export LF_ICONS="\
+di=📁:\
+fi=📄:\
+ex=🎯:\
+ln=🔗:\
+*.txt=📄:\
+*.png=📸:\
+*.jpg=📸:\
+*.jpeg=📸:\
+*.svg=🗺️:\
+*.pdf=📕:\
+*.md=📘:\
+*.iso=💿:\
+*.log=📙:\
+*.torrent=🔽:\
+*.info=ℹ:\
+*.1=🦮:\
+*.jar=♨️:\
+*.java=♨️:\
+*.mkv=🎥:\
+*.mp4=🎥:\
+*.webm=🎥:\
+*.avi=🎥:\
+*.mov=🎥:\
+*.mpg=🎥:\
+*.mpeg=🎥:\
+*.wmv=🎥:\
+*.m4b=🎥:\
+*.flv=🎥:\
+*.mp3=🎵:\
+*.opus=🎵:\
+*.ogg=🎵:\
+*.m4a=🎵:\
+*.flac=🎼:\
+*.wav=🎼:\
+*.r=📊:\
+*.R=📊:\
+*.Rmd=📊:\
+*.m=📊:\
+*.csv=📓:\
+*.css=🎨:\
+*.xcf🖌️:\
+*.gpg=🔒:\
+*.html=🌐:\
+*.tar.bz2=📦:\
+*.tar.gz=📦:\
+*.bz2=📦:\
+*.rar=📦:\
+*.gz=📦:\
+*.tar=📦:\
+*.tbz2=📦:\
+*.tgz=📦:\
+*.zip=📦:\
+*.Z=📦:\
+*.7z=📦:\
+*.deb=📦:\
+*.tar.xz=📦:\
+*.tar.zst=📦:\
+"
+
+if pacman -Qs libxft-git >/dev/null 2>&1; then
+	# Start graphical server on user's current tty if not already running.
+	[ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
+else
+	printf "ERROR: Please install \`libxft-git\` from the AUR\n"
+fi

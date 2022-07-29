@@ -1,0 +1,30 @@
+#!/bin/bash
+
+re='^[0-9]+$'
+min=$(cat /sys/bus/cpu/devices/cpu0/cpufreq/cpuinfo_min_freq)
+max=$(cat /sys/bus/cpu/devices/cpu0/cpufreq/cpuinfo_max_freq)
+
+usage()
+{
+	printf "Usage: cpufreq [-s] [frequency]\n"
+}
+
+fset()
+{
+	! [[ $1 =~ $re ]] && printf "ERROR: Invalid number\n" && exit 1
+	if [ "$1" -gt "$max" ] || [ "$1" -lt "$min" ]; then
+		printf "ERROR: Invalid frequency\n" && exit 1
+	fi
+
+	printf "%s\n" "$1" | tee /sys/bus/cpu/devices/cpu*/cpufreq/scaling_max_freq >/dev/null
+}
+
+[ -z "$1" ] && usage && exit 0
+
+while getopts ":hs:" o; do
+	case "${o}" in
+		h) usage && exit 0;;
+		s) [ -n ${OPTARG} ] && fset ${OPTARG};;
+		*) printf "ERROR: Invalid option: %s\n" "$OPTARG" && exit 1;;
+	esac
+done

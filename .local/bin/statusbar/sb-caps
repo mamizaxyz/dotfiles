@@ -1,0 +1,4 @@
+#!/bin/sh
+
+[ "$(xset q | grep Caps | awk '{print $4}')" = "off" ] && echo && exit 0
+echo "🔼"

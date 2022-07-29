@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Get WM:
+#export WM="$(wmctrl -m | awk 'NR==1{print $2}')"
+export WM="(xprop -id $(xprop -root -notype | awk '$1=="_NET_SUPPORTING_WM_CHECK:"{print $5}') -notype -f _NET_WM_NAME 8t | awk 'NR==1{print $3}' | sed 's/\"//g')"
+
+wmpid()
+{
+	tree="$(pstree -ps $$)"
+	tree="${tree#*$WM(}"
+	echo "${tree%%)*}"
+}
+
+case "$(printf "Exit\n🔒 Lockdown\n🚪 Leave $WM\n🪟 Restart $WM\n💤 Suspend\n🐻 Hibernate\n🔃 Reboot\n💻 Shutdown\n📺 Display off\n⏰ Uptime" | dmenu -i -p "Action: ")" in
+	"Exit") exit;;
+	"🔒 Lockdown") notify-send "Locking down" && sleep 2 && slock;;
+	"🚪 Leave $WM") kill -TERM "$(wmpid)";;
+	"🪟 Restart $WM") kill -HUP "$(wmpid)";;
+	"💤 Suspend") slock systemctl suspend -i;;
+	"🐻 Hibernate") slock systemctl hibernate -i;;
+	"🔃 Reboot") notify-send "Rebooting the system" && sleep 2 && reboot;;
+	"💻 Shutdown") notify-send "Going down" && sleep 2 && shutdown -h now;;
+	"📺 Display off") xset dpms force off;;
+	"⏰ Uptime") notify-send "$(uptime -p)" ;;
+	*) exit 1;;
+esac

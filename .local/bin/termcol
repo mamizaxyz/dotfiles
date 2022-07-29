@@ -1,0 +1,31 @@
+#!/bin/sh
+
+usage()
+{
+    printf "Usage: termcol [-lshu]\n"
+}
+
+themelist()
+{
+    grep "\&" "$HOME/.config/alacritty/alacritty.yml" | sed 's/:.*$//g;s/ //g'
+}
+
+settheme()
+{
+	themelist | grep -q "$1" || { printf "ERROR: Theme '%s' is not available\n" "$1" && exit 1; }
+	sed -i "s/^colors:.*/colors: \*$1/g" "$HOME/.config/alacritty/alacritty.yml"
+}
+
+grep -q "colors: \*" "$HOME/.config/alacritty/alacritty.yml" || { printf "ERROR: Alacritty configuration file not setup correctly\n" && exit 1; }
+
+while getopts ":luhs:" o; do
+    case "${o}" in
+        h) usage && exit 0;;
+        u) usage && exit 0;;
+        l) themelist && exit 0;;
+        s) settheme "${OPTARG}" && exit 0;;
+	*) usage && exit 1;;
+    esac
+done
+
+usage && exit 1

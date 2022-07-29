@@ -1,0 +1,5 @@
+#!/bin/sh
+
+chosen="$(man -k . | awk '{$3="-"; print $0}' | dmenu -i -l 20 -p 'Manpage: ' | awk '{print $2, $1}' | tr -d '()')"
+[ -z "$chosen" ] && exit 1
+echo "$chosen" | xargs "$TERMINAL" -e man
