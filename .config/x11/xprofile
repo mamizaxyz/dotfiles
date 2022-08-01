@@ -5,11 +5,13 @@
 
 setsid -f xrdb "$HOME/.config/x11/xresources"
 
+xmodmap -e "remove Mod1 = Alt_R" -e "keycode 108 = Super_R" >/dev/null 2>&1
+
 setsid -f setxkbmap -layout "us,ir" -option grp:alt_shift_toggle
 
 xset r rate 300 50
 
-autostart="xcompmgr screenres nm-applet blueman-applet numlockx taptoclick lxsession unclutter dunst mpd setbg "
+autostart="xcompmgr screenres nm-applet blueman-applet numlockx taptoclick lxsession unclutter dunst mpd setbg"
 for p in $autostart; do
     pidof -s "$p" || setsid -f "$p"
 done
