@@ -7,7 +7,7 @@ case $BLOCK_BUTTON in
 	5) pamixer --allow-boost -d 1;;
 	3) notify-send "🎵 Volume module" "\- Shows volume 🔊, 🔇 if muted.
 - Middle click to mute.
-_ Scroll to adjust volume.";;
+- Scroll to adjust volume.";;
 	6) "$TERMINAL" -e "$EDITOR" "$0";;
 esac
 
